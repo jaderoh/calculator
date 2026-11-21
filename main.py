@@ -137,7 +137,7 @@ elif choice == "2":
             print(x_score)
             finish = time.time()
             calculating_time[i][j] = finish - start
-            print("시간:", f"{calculating_time[i][j]:.6f}", "초")
+            #print("시간:", f"{(calculating_time[i][j]*1000):.3f}", "ms")
             if abs(cross_score - x_score) < 0.000000009:
                 print("판정: UNDECIDED | FAIL (동점 규칙)")
                 count_fail += 1
@@ -157,7 +157,7 @@ elif choice == "2":
     category = ["5", "13", "25"]
     for i in range(3):
         print(category[i]+"x"+category[i], end=" ")
-        print(f"{(calculating_time[i][0] + calculating_time[i][1])/2:.3f}", end=" ")
+        print(f"{((calculating_time[i][0] + calculating_time[i][1])/2)*1000:.3f}", end=" ")
         print(int(category[i])**2)
     print()
 
@@ -170,7 +170,8 @@ elif choice == "2":
     print(f"실패: {count_fail}개")
     print()
     print("실패 케이스:")
-    
+
+
 
 
 
