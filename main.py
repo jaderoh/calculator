@@ -123,6 +123,8 @@ elif choice == "2":
     print("#"+"-"*30)
     print("#[2] 패턴 분석 (라벨 정규화 적용)")
     print("#"+"-"*30)
+    count_pass = 0
+    count_fail = 0
     for i in range(3):
         for j in range(2):
             print(f"---{(b[i][j])}---")
@@ -138,10 +140,13 @@ elif choice == "2":
             print("시간:", f"{calculating_time[i][j]:.6f}", "초")
             if abs(cross_score - x_score) < 0.000000009:
                 print("판정: UNDECIDED | FAIL (동점 규칙)")
+                count_fail += 1
             elif cross_score > x_score:
                 print("판정: Cross | PASS")
+                count_pass += 1
             else:
                 print("판정: X | PASS")
+                count_pass += 1
     print()
     
     print("#"+"-"*30)
@@ -154,7 +159,18 @@ elif choice == "2":
         print(category[i]+"x"+category[i], end=" ")
         print(f"{(calculating_time[i][0] + calculating_time[i][1])/2:.3f}", end=" ")
         print(int(category[i])**2)
+    print()
 
+    print("#"+"-"*30)
+    print("#[4] 결과 요약")
+    print("#"+"-"*30)
+    count_total = count_pass + count_fail
+    print(f"총 테스트: {count_total}개")
+    print(f"통과: {count_pass}개")
+    print(f"실패: {count_fail}개")
+    print()
+    print("실패 케이스:")
+    
 
 
 
