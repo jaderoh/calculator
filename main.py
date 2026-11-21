@@ -18,7 +18,7 @@ def load_data(FILENAME):
         data = json.load(f)
     return data
 
-data0 = load_data(FILENAME)
+#data0 = load_data(FILENAME)
 
 def mac(data0, data1):
     m = 3
@@ -29,18 +29,7 @@ def mac(data0, data1):
             acc += data0[i][j] * data1[i][j]
             count += 1
     return acc
-"""
-def pad(data, pad_size):
-    m = len(data)
-    p = pad_size
-    re_data = [[0]*(m+p*2)]*(m+p*2)
-    for i in range(m):
-        for j in range(m):
-            re_data[p+i][p+j] = data[i][j]
-    return re_data
-"""
 
-#print(pad(data1, 3))
 #print(mac(data0["filters"]["size_5"]["cross"],data0["filters"]["size_5"]["x"]))
 
 def input_matrix():
@@ -49,6 +38,24 @@ def input_matrix():
     matrix = [list(map(int, input().split())) for _ in range(n)]
     print("입력된 행렬\n", matrix)
     return matrix
+
+LABEL_MAP = {
+    "+": "cross",
+    "cross": "cross",
+    "plus": "cross",
+    "x": "x",
+    "×": "x",
+}
+
+def normalize_label(label):
+    key = str(label).strip().lower()
+    if key not in LABEL_MAP:
+        raise ValueError(f"알 수 없는 라벨: {label!r}")
+    return LABEL_MAP[key]
+
+#print(normalize_label("+"))        # cross
+#print(normalize_label(" Plus "))   # cross
+#print(normalize_label("X"))        # x
 
 print(
 """
@@ -108,6 +115,9 @@ elif choice == "2":
     print("#"+"-"*30)
     print("#[1] 필터 로드")
     print("#"+"-"*30)
+    data0 = load_data(FILENAME)
+    for i in range(3):
+        print(f"V {a[i]} 필터 로드 완료 (Cross, X)")
     print()
     
     print("#"+"-"*30)
