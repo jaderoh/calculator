@@ -3,6 +3,8 @@ import time
 
 FILENAME = "data.json"
 
+Epsilon = 1e-9
+
 def load_data(FILENAME):
     try:
         with open(FILENAME, "r", encoding="utf-8") as f:
@@ -14,12 +16,9 @@ def load_data(FILENAME):
         print("저장 파일이 손상되어 빈 목록으로 시작합니다.")
         return []
 
-    with open(FILENAME, "R", encoding="utf-8") as f:
-        data = json.load(f)
-    return data
-
 #data0 = load_data(FILENAME)
 
+"""
 def mac(data0, data1):
     m = 3
     acc = 0
@@ -29,6 +28,13 @@ def mac(data0, data1):
             acc += data0[i][j] * data1[i][j]
             count += 1
     return acc
+"""
+
+def mac(filt, pattern):
+    n = len(filt)
+    if n != len(pattern) or any(len(r) != n for r in filt) or any(len(r) != n for r in pattern):
+        raise ValueError("필터와 패턴의 크기가 다릅니다.")
+    return sum(filt[i][j] * pattern[i][j] for i in range(n) for j in range(n))
 
 #print(mac(data0["filters"]["size_5"]["cross"],data0["filters"]["size_5"]["x"]))
 
@@ -96,13 +102,13 @@ if choice == "1":
     finish = time.time()
 
  
-    if abs(A_score - B_score) < 0.000000009:
+    if abs(A_score - B_score) < Epsilon:
         print("판정 불가 (|A-B| < 1e-9)")
     elif A_score > B_score:
-        print("연산 시간:", f"{finish - start:.3f}", "초")
+        print("연산 시간:", f"{(finish - start)*1000:.3f}", "ms")
         print("판정: A")
     else:
-        print("연산 시간:", f"{finish - start:.3f}", "초")
+        print("연산 시간:", f"{(finish - start)*1000:.3f}", "ms")
         print("판정: B")
 
 
@@ -125,6 +131,7 @@ elif choice == "2":
     print("#"+"-"*30)
     count_pass = 0
     count_fail = 0
+    case_fail = []
     for i in range(3):
         for j in range(2):
             print(f"---{(b[i][j])}---")
@@ -138,9 +145,10 @@ elif choice == "2":
             finish = time.time()
             calculating_time[i][j] = finish - start
             #print("시간:", f"{(calculating_time[i][j]*1000):.3f}", "ms")
-            if abs(cross_score - x_score) < 0.000000009:
+            if abs(cross_score - x_score) < Epsilon:
                 print("판정: UNDECIDED | FAIL (동점 규칙)")
                 count_fail += 1
+                case_fail.append(f"{b[i][j]}: 동점")
             elif cross_score > x_score:
                 print("판정: Cross | PASS")
                 count_pass += 1
@@ -170,8 +178,7 @@ elif choice == "2":
     print(f"실패: {count_fail}개")
     print()
     print("실패 케이스:")
-
-
-
+    for case in case_fail:
+        print(case+"(UNDECIDED) 처리 규칙에 따라 FAIL")
 
 
