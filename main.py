@@ -121,7 +121,8 @@ def choice2():
     print("#"+"-"*30)
     count_pass = 0
     count_fail = 0
-    case_fail = []
+    failures = []   # 루프 시작 전에 선언 (마지막 "실패 케이스" 출력용)
+    
     for i in range(3):
         for j in range(2):
             print(f"---{(b[i][j])}---")
@@ -137,8 +138,6 @@ def choice2():
 
             #print("시간:", f"{(calculating_time[i][j]*1000):.3f}", "ms")
             
-            failures = []   # 루프 시작 전에 선언 (마지막 "실패 케이스" 출력용)
-
             # ... 점수 계산 후 ...
             pattern_name = b[i][j]
             raw_expected = data0["patterns"][pattern_name]["expected"]
