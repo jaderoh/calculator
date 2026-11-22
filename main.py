@@ -34,16 +34,32 @@ def mac(filt, pattern):
     n = len(filt)
     if n != len(pattern) or any(len(r) != n for r in filt) or any(len(r) != n for r in pattern):
         raise ValueError("필터와 패턴의 크기가 다릅니다.")
-    return sum(filt[i][j] * pattern[i][j] for i in range(n) for j in range(n))
+    return sum(filt[i][j] * pattern[i][j] for i in range(n) for j in range(n)) # MAC 연산
 
 #print(mac(data0["filters"]["size_5"]["cross"],data0["filters"]["size_5"]["x"]))
-
+"""
 def input_matrix():
     #n = int(input("행렬 크기: "))
     n = 3
     matrix = [list(map(int, input().split())) for _ in range(n)]
     print("입력된 행렬\n", matrix)
     return matrix
+"""
+def input_matrix():
+    n = 3
+    while True:
+        try:
+            rows = []
+            for k in range(n):
+                row = list(map(int, input().split()))
+                if len(row) != n:
+                    raise ValueError(f"{k + 1}번째 줄: 정수 {n}개가 필요합니다 (입력 {len(row)}개)")
+                rows.append(row)
+            print("입력된 행렬\n", rows)
+            return rows
+        except ValueError as e:
+            print(f"입력 오류: {e}")
+            print(f"정수 {n}개를 공백으로 구분해 {n}줄을 처음부터 다시 입력하세요.")
 
 LABEL_MAP = {
     "+": "cross",
@@ -122,7 +138,7 @@ def choice2():
     count_pass = 0
     count_fail = 0
     failures = []   # 루프 시작 전에 선언 (마지막 "실패 케이스" 출력용)
-    
+
     for i in range(3):
         for j in range(2):
             print(f"---{(b[i][j])}---")
@@ -199,15 +215,18 @@ def choice2():
     else:
         print(" 없음")
 
+def main():
+    print(
+    """
+    1. 사용자 입력 (3x3)
+    2. data.json 분석
+    """
+    )
+    choice = input("선택:")
+    if choice == "1":
+        choice1()
+    elif choice == "2":
+        choice2()
 
-print(
-"""
-1. 사용자 입력 (3x3)
-2. data.json 분석
-"""
-)
-choice = input("선택:")
-if choice == "1":
-    choice1()
-elif choice == "2":
-    choice2()
+if __name__ == "__main__":
+    main()
