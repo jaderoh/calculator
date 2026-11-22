@@ -28,8 +28,6 @@ score = Σ (filter[i][j] × pattern[i][j])
 
 ## 실행 방법
 
-요구 사항: Python 3.8 이상 (표준 라이브러리만 사용, 별도 설치 불필요)
-
 ```bash
 python main.py
 ```
