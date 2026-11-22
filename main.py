@@ -63,14 +63,7 @@ def normalize_label(label):
 #print(normalize_label(" Plus "))   # cross
 #print(normalize_label("X"))        # x
 
-print(
-"""
-1. 사용자 입력 (3x3)
-2. data.json 분석
-"""
-)
-choice = input("선택:")
-if choice == "1":
+def choice1():
     n = 3
     print("#"+"-"*30)
     print("#[1] 필터 입력")
@@ -93,14 +86,13 @@ if choice == "1":
     print("#[3] MAC 결과")
     print("#"+"-"*30)
     start = time.time()
-    print("A 점수:", end=" ")
     A_score = mac(f_a, pattern)
+    B_score = mac(f_b, pattern)
+    finish = time.time()
+    print("A 점수:", end=" ")
     print(A_score)
     print("B 점수:", end=" ")
-    B_score = mac(f_b, pattern)
     print(B_score)
-    finish = time.time()
-
  
     if abs(A_score - B_score) < Epsilon:
         print("판정 불가 (|A-B| < 1e-9)")
@@ -111,9 +103,7 @@ if choice == "1":
         print("연산 시간:", f"{(finish - start)*1000:.3f}", "ms")
         print("판정: B")
 
-
-
-elif choice == "2":
+def choice2():
     a = ["size_5", "size_13", "size_25"]
     b = [["size_5_1", "size_5_2"], ["size_13_1", "size_13_2"], ["size_25_1", "size_25_2"]]
     calculating_time = [[0]*2 for _ in range(3)]
@@ -136,25 +126,51 @@ elif choice == "2":
         for j in range(2):
             print(f"---{(b[i][j])}---")
             start = time.time()
-            print("Cross 점수:", end=" ")
             cross_score = mac(data0["filters"][a[i]]["cross"], data0["patterns"][b[i][j]]["input"])
-            print(cross_score)
-            print("  X   점수:", end=" ")
             x_score = mac(data0["filters"][a[i]]["x"], data0["patterns"][b[i][j]]["input"])
-            print(x_score)
             finish = time.time()
             calculating_time[i][j] = finish - start
+            print("Cross 점수:", end=" ")
+            print(cross_score)
+            print("  X   점수:", end=" ")
+            print(x_score)
+
             #print("시간:", f"{(calculating_time[i][j]*1000):.3f}", "ms")
+            
+            failures = []   # 루프 시작 전에 선언 (마지막 "실패 케이스" 출력용)
+
+            # ... 점수 계산 후 ...
+            pattern_name = b[i][j]
+            raw_expected = data0["patterns"][pattern_name]["expected"]
+
+            # 1) 판정 결과 결정
             if abs(cross_score - x_score) < Epsilon:
-                print("판정: UNDECIDED | FAIL (동점 규칙)")
-                count_fail += 1
-                case_fail.append(f"{b[i][j]}: 동점")
+                predicted = None
             elif cross_score > x_score:
-                print("판정: Cross | PASS")
+                predicted = "cross"
+            else:
+                predicted = "x"
+
+            # 2) 기대 라벨 정규화 + 비교
+            try:
+                expected = normalize_label(raw_expected)
+            except ValueError as e:
+                print(f"판정: FAIL ({e})")
+                failures.append(f"{pattern_name}: {e}")
+                count_fail += 1
+                continue
+
+            if predicted is None:
+                print(f"판정: UNDECIDED | expected: {expected} | FAIL (동점 규칙)")
+                failures.append(f"{pattern_name}: 동점 (cross={cross_score}, x={x_score})")
+                count_fail += 1
+            elif predicted == expected:
+                print(f"판정: {predicted} | expected: {expected} | PASS")
                 count_pass += 1
             else:
-                print("판정: X | PASS")
-                count_pass += 1
+                print(f"판정: {predicted} | expected: {expected} | FAIL")
+                failures.append(f"{pattern_name}: 판정 {predicted}, 기대 {expected}")
+                count_fail += 1
     print()
     
     print("#"+"-"*30)
@@ -178,7 +194,21 @@ elif choice == "2":
     print(f"실패: {count_fail}개")
     print()
     print("실패 케이스:")
-    for case in case_fail:
-        print(case+"(UNDECIDED) 처리 규칙에 따라 FAIL")
+    if failures:
+        for f in failures:
+            print(" -", f)
+    else:
+        print(" 없음")
 
 
+print(
+"""
+1. 사용자 입력 (3x3)
+2. data.json 분석
+"""
+)
+choice = input("선택:")
+if choice == "1":
+    choice1()
+elif choice == "2":
+    choice2()
