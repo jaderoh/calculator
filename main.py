@@ -79,6 +79,7 @@ def normalize_label(label):
 #print(normalize_label(" Plus "))   # cross
 #print(normalize_label("X"))        # x
 
+
 def choice1():
     n = 3
     print("#"+"-"*30)
