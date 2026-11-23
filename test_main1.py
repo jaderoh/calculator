@@ -247,11 +247,11 @@ def analyze_case(data, name):
     result.update(cross=cs, x=xs)
     result["time"] = measure(lambda: (mac(cross_f, pat), mac(x_f, pat)))
 
-    # ② 수치 이상값 (NaN / inf)
+    # (2) 수치 이상값 (NaN / inf)
     if not (is_finite(cs) and is_finite(xs)):
         return fail("NUMERIC", f"비정상 점수 (cross={cs}, x={xs})")
 
-    # ③ float 판정 vs 정확 계산 판정
+    # (3) float 판정 vs 정확 계산 판정
     predicted = decide(cs, xs, is_tie(cs, xs))
     c = compare_exact(mac_exact(cross_f, pat), mac_exact(x_f, pat))
     exact = None if c == 0 else ("cross" if c > 0 else "x")
@@ -429,9 +429,9 @@ def print_summary(results):
     print()
 
     groups = {}
-        for r in results:
-            if not r["ok"]:
-                groups.setdefault(r["category"], []).append(r)
+    for r in results:
+        if not r["ok"]:
+            groups.setdefault(r["category"], []).append(r)
 
     print("실패 케이스:")
     if not groups:
