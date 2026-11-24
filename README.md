@@ -158,5 +158,5 @@ python main.py
 - 부동소수점 오차는 "이진수로 유한 비트에 저장하며 반올림하기 때문에" 생기고, epsilon은 누적 오차보다는 크고 의미 있는 차이보다는 작게 잡아야 합니다. float64 환경에서는 1e-9가 안전한 관례적 선택입니다.
 
 ## git commit 리스트
-![alt text](image.png)
-W
+
+![alt text](image-1.png)
