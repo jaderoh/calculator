@@ -160,3 +160,7 @@ python main.py
 ## git commit 리스트
 
 ![alt text](image-1.png)
+
+## 실행 화면
+
+2.<img width="924" height="1674" alt="image" src="https://github.com/user-attachments/assets/db4af3cf-736a-47fb-a11f-a85e4c564b1f" />
