@@ -49,24 +49,17 @@ def validate_matrix(m, name):
 
 #data0 = load_data(FILENAME)
 
-"""
-def mac(data0, data1):
-    m = 3
-    acc = 0
-    count = 0
-    for i in range(m):
-        for j in range(m):
-            acc += data0[i][j] * data1[i][j]
-            count += 1
-    return acc
-"""
-
 def mac(filt, pattern):
     n = len(filt)
     if n != len(pattern) or any(len(r) != n for r in filt) or any(len(r) != n for r in pattern):
         raise ValueError("필터와 패턴의 크기가 다릅니다.")
-    return sum(filt[i][j] * pattern[i][j] for i in range(n) for j in range(n)) # MAC 연산
+    acc = 0
+    for i in range(n):
+        for j in range(n):
+            acc += filt[i][j] * pattern[i][j]
+    return acc # MAC 연산
 
+# cross_score와 x_score 중 큰 쪽 리턴하기
 def decide(cross_score, x_score, tie):
     if tie:
         return None
@@ -81,14 +74,7 @@ def measure(fn, repeat=20):
     return (time.perf_counter() - start) / repeat
 
 #print(mac(data0["filters"]["size_5"]["cross"],data0["filters"]["size_5"]["x"]))
-"""
-def input_matrix():
-    #n = int(input("행렬 크기: "))
-    n = 3
-    matrix = [list(map(int, input().split())) for _ in range(n)]
-    print("입력된 행렬\n", matrix)
-    return matrix
-"""
+
 def input_matrix():
     n = 3
     while True:
