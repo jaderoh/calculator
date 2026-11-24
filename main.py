@@ -387,6 +387,29 @@ def print_summary(results):
             for r in groups[cat]:
                 print(f"   - {r['name']}: {r['reason']}")
 
+def bonus2():
+    n = int(input("행렬 크기: "))
+    plus = [[0 for _ in range(n)] for _ in range(n)]
+    s = int(n/2)
+    print(s)
+    for i in range(n):
+        plus[i][s] = 1
+        plus[s][i] = 1
+    for i in range(n):
+        for j in range(n):
+            print(plus[i][j], end=" ")
+        print()
+    print()
+    
+    x = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        x[i][i] = 1
+        x[i][n-i-1] = 1
+    for i in range(n):
+        for j in range(n):
+            print(x[i][j], end=" ")
+        print()
+
 def main():
     print(
     """
@@ -399,6 +422,8 @@ def main():
         choice1()
     elif choice == "2":
         choice2()
+    elif choice == "3":
+        bonus2()
 
 if __name__ == "__main__":
     main()
