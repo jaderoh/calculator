@@ -163,4 +163,9 @@ python main.py
 
 ## 실행 화면
 
+1. <img width="815" height="1064" alt="image" src="https://github.com/user-attachments/assets/233d7bf2-b9a6-42c3-90d7-b3fc2f1bb986" />
+
+<img width="762" height="1031" alt="image" src="https://github.com/user-attachments/assets/a7875716-5488-4c93-a385-7a5fca621d76" />
+
+
 2.<img width="924" height="1674" alt="image" src="https://github.com/user-attachments/assets/db4af3cf-736a-47fb-a11f-a85e4c564b1f" />
