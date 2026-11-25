@@ -169,4 +169,5 @@ python main.py
 <img width="762" height="1031" alt="image" src="https://github.com/user-attachments/assets/a7875716-5488-4c93-a385-7a5fca621d76" />
 
 
-2.<img width="924" height="1674" alt="image" src="https://github.com/user-attachments/assets/db4af3cf-736a-47fb-a11f-a85e4c564b1f" />
+2.
+<img width="924" height="1674" alt="image" src="https://github.com/user-attachments/assets/db4af3cf-736a-47fb-a11f-a85e4c564b1f" />
