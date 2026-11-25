@@ -356,7 +356,7 @@ def print_performance(results):
     print("-" * 32)
     for size in sorted(by_size):
         avg_ms = sum(by_size[size]) / len(by_size[size]) * 1000
-        print(f"{size}x{size} | {avg_ms:.4f} | {2 * size * size}")
+        print(f"{size}x{size} | {avg_ms:.4f} | {size * size}")
     print(f"(패턴 1개 = Cross + X 두 번의 MAC, 20회 반복 평균)")
     print()
 
